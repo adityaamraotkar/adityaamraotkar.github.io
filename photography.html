@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aditya Amraotkar | Photography</title>
+<meta name="description" content="Photography by Aditya Amraotkar: cars, scenery, portraits, and events.">
+<script>
+  try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@500;700&family=Tomorrow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-photo">
+<div class="wrap site-nav">
+  <a class="brand" href="index.html">Aditya Amraotkar</a>
+  <nav aria-label="Main">
+    <a class="n-home" href="index.html">About</a>
+    <a class="n-work" href="work.html">Work</a>
+    <a class="n-photo" href="photography.html" aria-current="page">Photography</a>
+    <button type="button" class="theme-btn" id="theme-btn" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>
+      <span id="theme-label">Dark mode</span>
+    </button>
+  </nav>
+</div>
+<header class="photo-hero">
+  <div class="wrap">
+    <h1 class="c-terra">Photography</h1>
+    <p class="meta">Cars, scenery, portraits, and events, plus freelance work for automotive and apparel clients since 2023. Pick any photo to see it full size.</p>
+    <ul class="chips" id="chips"></ul>
+  </div>
+</header>
+
+<main class="wrap" id="galleries"></main>
+
+<dialog class="lb" id="lb" aria-label="Photo viewer">
+  <div class="lb-top">
+    <span class="count" id="lb-count"></span>
+    <button type="button" id="lb-close">Close</button>
+  </div>
+  <div class="lb-stage" id="lb-stage"></div>
+  <div class="lb-bottom">
+    <button type="button" id="lb-prev">Previous</button>
+    <span class="cap" id="lb-cap"></span>
+    <button type="button" id="lb-next">Next</button>
+  </div>
+</dialog>
+
+<footer>
+  <div class="wrap"><p>Charlotte, NC. <a href="mailto:aditya.amraotkar@gmail.com">aditya.amraotkar@gmail.com</a>. <a href="https://www.linkedin.com/in/adityaamraotkar" target="_blank" rel="noopener">LinkedIn</a></p></div>
+</footer>
+<script src="theme.js"></script>
+<script>
+/*
+  HOW TO ADD PHOTOS
+  1. Put exported JPEGs in photos/<gallery id>/ (for example photos/cars/01.jpg).
+  2. Add one line per photo: { src: "photos/cars/01.jpg", w: 3, h: 2, alt: "What is in the photo" }
+     w and h are the shape (3 by 2 for landscape, 2 by 3 for portrait, 1 by 1 for square).
+  3. Paste a Lightroom share link into album to show a "Full album" link. Leave it "" to hide it.
+  Photos with no src show as striped placeholders.
+*/
+var GALLERIES = [
+  { id: "cars", title: "Cars", album: "", photos: placeholders([[3,2],[2,3],[3,2],[3,2],[16,9],[2,3],[3,2],[3,2]]) },
+  { id: "scenery", title: "Scenery", album: "", photos: placeholders([[16,9],[3,2],[2,3],[3,2],[3,2],[2,3],[16,9]]) },
+  { id: "portraits", title: "Portraits", album: "", photos: placeholders([[2,3],[2,3],[3,2],[2,3],[2,3],[4,5]]) },
+  { id: "events", title: "Events", album: "", photos: placeholders([[3,2],[3,2],[2,3],[3,2],[16,9],[3,2]]) }
+];
+
+function placeholders(shapes) {
+  return shapes.map(function (s) { return { src: "", w: s[0], h: s[1], alt: "" }; });
+}
+
+(function () {
+  var main = document.getElementById("galleries"), chips = document.getElementById("chips");
+  var flat = [];
+  GALLERIES.forEach(function (g) {
+    chips.insertAdjacentHTML("beforeend", "<li><a href='#" + g.id + "'>" + g.title + "</a></li>");
+    var sec = document.createElement("section");
+    sec.className = "gallery-sec"; sec.id = g.id; sec.setAttribute("aria-labelledby", g.id + "-h");
+    var head = "<div class='gallery-head'><h2 id='" + g.id + "-h'>" + g.title + "</h2>" +
+      (g.album ? "<p><a href='" + g.album + "' target='_blank' rel='noopener'>Full album on Lightroom</a></p>" : "") + "</div>";
+    var grid = "<div class='gallery'>";
+    g.photos.forEach(function (p, i) {
+      var idx = flat.length, r = p.w / p.h;
+      var label = p.alt || (g.title + ", photo " + (i + 1));
+      flat.push({ p: p, g: g, n: i + 1, label: label });
+      grid += "<button type='button' class='g-item' data-i='" + idx + "' aria-label='Open " + label + "' " +
+        "style='--r:" + r.toFixed(4) + ";aspect-ratio:" + p.w + "/" + p.h + "'>" +
+        (p.src ? "<img src='" + p.src + "' alt='" + (p.alt || "") + "' loading='lazy' decoding='async'>" : "<span class='ph'>Photo " + (i + 1) + "</span>") +
+        "</button>";
+    });
+    sec.innerHTML = head + grid + "</div>";
+    main.appendChild(sec);
+  });
+
+  var lb = document.getElementById("lb"), stage = document.getElementById("lb-stage");
+  var cur = 0, opener = null;
+  function show(i) {
+    cur = (i + flat.length) % flat.length;
+    var it = flat[cur];
+    stage.innerHTML = it.p.src ? "<img src='" + it.p.src + "' alt='" + (it.p.alt || "") + "'>" : "<span class='ph' style='aspect-ratio:" + it.p.w + "/" + it.p.h + "'>" + it.g.title + ", photo " + it.n + "</span>";
+    document.getElementById("lb-cap").textContent = it.p.alt || it.g.title;
+    document.getElementById("lb-count").textContent = it.g.title + " " + it.n + " of " + it.g.photos.length;
+    if (it.p.src) { [1, -1].forEach(function (d) { var n = flat[(cur + d + flat.length) % flat.length]; if (n.p.src) { var im = new Image(); im.src = n.p.src; } }); }
+  }
+  main.addEventListener("click", function (e) {
+    var b = e.target.closest(".g-item"); if (!b) return;
+    opener = b; show(+b.getAttribute("data-i")); lb.showModal();
+  });
+  document.getElementById("lb-prev").onclick = function () { show(cur - 1); };
+  document.getElementById("lb-next").onclick = function () { show(cur + 1); };
+  document.getElementById("lb-close").onclick = function () { lb.close(); };
+  lb.addEventListener("close", function () { if (opener) opener.focus(); });
+  lb.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") show(cur - 1);
+    if (e.key === "ArrowRight") show(cur + 1);
+  });
+  var x0 = null;
+  stage.addEventListener("pointerdown", function (e) { x0 = e.clientX; });
+  stage.addEventListener("pointerup", function (e) {
+    if (x0 === null) return; var dx = e.clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aditya Amraotkar | Work</title>
+<meta name="description" content="Aditya Amraotkar, Operations and Supply Chain student at UNC Charlotte. Built a supply and demand balancing workbook at Honeywell. Seeking Summer 2027 internships.">
+<script>
+  try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@500;700&family=Tomorrow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-work">
+
+<div class="wrap site-nav">
+  <a class="brand" href="index.html">Aditya Amraotkar</a>
+  <nav aria-label="Main">
+    <a class="n-home" href="index.html">About</a>
+    <a class="n-work" href="work.html" aria-current="page">Work</a>
+    <a class="n-photo" href="photography.html">Photography</a>
+    <button type="button" class="theme-btn" id="theme-btn" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>
+      <span id="theme-label">Dark mode</span>
+    </button>
+  </nav>
+</div>
+<header class="hero">
+  <div class="wrap">
+    <h1>Aditya <span class="c-sea">Amraotkar</span></h1>
+    <p class="tagline"><span class="c-sea">Supply planning student.</span> I build tools that show planners where inventory is short, where it is heavy, and what changes when the plan does.</p>
+    <p class="meta">Business Administration at UNC Charlotte, Operations and Supply Chain Management concentration. Looking for Summer 2027 supply chain and operations internships.</p>
+    <ul class="links">
+      <li><a class="btn primary" href="mailto:aditya.amraotkar@gmail.com">Email me</a></li>
+      <li><a class="btn" href="Aditya_Amraotkar_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a></li>
+      <li><a class="btn" href="https://www.linkedin.com/in/adityaamraotkar" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="planner" id="planner">
+    <h2>Try a simplified version of my Honeywell planning workbook</h2>
+    <p class="note">The real workbook runs in Excel across 7 sites and 34 production lines. This version keeps its main ideas: cascading selectors, a planning block for each material, a heat map, and a scenario override table. The plants, materials, and numbers here are all made up.</p>
+
+    <div class="controls">
+      <div><label for="f-site">Site</label><select id="f-site"></select></div>
+      <div><label for="f-line">Line</label><select id="f-line"></select></div>
+      <div><label for="f-proc">Procurement type</label><select id="f-proc"></select></div>
+      <div><label for="f-mat">Material</label><select id="f-mat"></select></div>
+      <div><label for="f-scen">Scenario</label><select id="f-scen"></select></div>
+    </div>
+    <p class="scenario-desc" id="scen-desc" aria-live="polite"></p>
+
+    <h3 class="sub" id="block-title">Planning block</h3>
+    <div class="scroller"><table class="block" id="block"></table></div>
+    <ul class="legend" id="legend-block">
+      <li><span class="sw t-short"></span>Shortfall: below zero</li>
+      <li><span class="sw t-below"></span>Below target: more than 10% under safety stock</li>
+      <li><span class="sw t-ok"></span>Healthy: within 10%</li>
+      <li><span class="sw t-excess"></span>Excess: more than 10% over</li>
+      <li><span class="sw ov"></span>Overridden by the scenario</li>
+    </ul>
+
+    <h3 class="sub" id="map-title">Heat map</h3>
+    <div class="scroller"><table class="grid" id="grid"></table></div>
+
+    <h3 class="sub">Scenario overrides</h3>
+    <div class="scroller"><table class="ovr" id="ovr"></table></div>
+    <div class="ovr-actions">
+      <button type="button" class="btn" id="add-ov">Add override</button>
+      <span class="hint" id="add-hint"></span>
+    </div>
+  </div>
+
+  <section aria-labelledby="work">
+    <div class="split">
+      <h2 class="sec" id="work">Selected work</h2>
+      <div class="prose">
+        <h3>Supply and Demand Balancing workbook, Honeywell</h3>
+        <p>Honeywell Process Technology is moving its supply planning from SAP APO SNP to Kinaxis. In the meantime, SNP could not show shortfalls and excess side by side, and it could not run scenarios, so planners kept their own local spreadsheets. As a Supply Planner Intern, I built an Advanced Planning System in Excel in 10 weeks to bridge that gap. The planning team now uses it to balance supply and demand across 34 production lines at 7 manufacturing sites in the US, Europe, and China.</p>
+        <ul class="tight">
+          <li>Cascading dropdowns let planners filter by site, manufacturing line, procurement type, and profit center, then drill from base material down to SKU.</li>
+          <li>Each material gets a planning block with demand, supply, inventory, safety stock, deficit, and excess over a rolling 12 months.</li>
+          <li>A scenario override table lets planners change demand or supply for any month and compare versions without touching source data.</li>
+          <li>A four-tier heat map flags shortfall, below target, healthy, and excess against safety stock.</li>
+          <li>Global roll-up tabs sum every plant and line, at both SKU and base material level.</li>
+          <li>The calculation engine uses dynamic arrays (LET, FILTER, UNIQUE), XLOOKUP, INDEX/MATCH, SUMIFS, and COUNTIFS.</li>
+          <li>I pulled MRP data with SQL in Snowflake and Power BI, filtered 5,000+ materials down to 740+ active finished-goods SKUs, and joined BOM routing and work center tables to build a line-level material master.</li>
+          <li>I validated line, pack type, and procurement type assignments in SAP ECC (MD04, MD05) and worked through data discrepancies with the data science team.</li>
+        </ul>
+        <p>I presented it to the project sponsors and leadership, then handed it off with a planner operating SOP and a Power BI build specification for the data pipeline.</p>
+        <p class="tools">Tools: Excel, Power Query, Power BI, SQL, Snowflake, SAP ECC, SAP APO (SNP). Details are kept general because the work is internal to Honeywell.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="exp">
+    <div class="split">
+      <h2 class="sec" id="exp">Experience</h2>
+      <div class="prose">
+        <div class="role"><p><strong>Supply Planner Intern, Honeywell Process Technology</strong></p><p class="when">Charlotte, NC. June to August 2026</p>
+          <ul class="tight"><li>Built the planning workbook described above.</li></ul></div>
+        <div class="role"><p><strong>Area Manager Intern, Amazon</strong></p><p class="when">Charlotte, NC. June to August 2025</p>
+          <ul class="tight">
+            <li>Redesigned a sorting process to eliminate force-binding defects using Excel analysis, with $1.5M+ in projected annual savings.</li>
+            <li>Built inbound dock staffing guidelines from WMS data, proposing a labor allocation model projected to save $5M+ a year.</li>
+            <li>Proposed a Zebra RTLS asset-tracking rollout to improve warehouse visibility and reduce asset loss.</li>
+          </ul></div>
+        <div class="role"><p><strong>Formula SAE EV team, UNC Charlotte</strong></p><p class="when">Finance and Logistics Lead, then Marketing and Outreach Lead. September 2024 to December 2025</p>
+          <ul class="tight">
+            <li>Managed a $50K+ budget across the team and sub-teams to keep vehicle milestones on schedule.</li>
+            <li>Secured $35K+ in sponsorships from 10+ companies, including Siemens, SKF, EY, &Ouml;hlins, and Haas.</li>
+            <li>Ran procurement and logistics for vehicle components against build deadlines.</li>
+            <li>Built the team&rsquo;s social media from scratch and directed 100+ photographs for recruiting and sponsors.</li>
+          </ul></div>
+        <div class="role"><p><strong>Freelance photography and videography</strong></p><p class="when">January 2023 to present</p>
+          <ul class="tight"><li>30+ photo and video projects for automotive and apparel clients. See my <a href="photography.html">photography</a>.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="avert">
+    <div class="split">
+      <h2 class="sec" id="avert">What I learned starting a company</h2>
+      <div class="prose">
+        <h3>Avert Automation</h3>
+        <p>Avert offered preventative maintenance services to small and mid-sized manufacturers and industrial facilities around Charlotte. As co-founder I led B2B sales: prospecting, cold outreach, and on-site maintenance audits to find downtime risk for prospective clients. I also built the pitch deck and pricing, and spoke with angel investors. The company never reached revenue, and I have since stepped away. Here is what I took from it.</p>
+        <ul class="tight">
+          <li>Know your number before you pitch. An investor asked how much I was raising and I did not have an answer yet.</li>
+          <li>Company structure affects fundraising. Our LLC did not work with standard SAFE paperwork.</li>
+          <li>Selling to busy facilities means removing steps. That is why technicians could log maintenance by scanning a QR code, with no login.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="edu">
+    <div class="split">
+      <h2 class="sec" id="edu">Education and skills</h2>
+      <div class="prose">
+        <p><strong>UNC Charlotte, Belk College of Business.</strong> Business Administration, Operations and Supply Chain Management concentration. GPA 3.85. Expected May 2028.</p>
+        <p><strong>Systems and analytics:</strong> SQL, Snowflake, Power Query, Power BI, SAP ECC, SAP APO (SNP), Zebra WMS.</p>
+        <p><strong>Excel:</strong> XLOOKUP, INDEX/MATCH, SUMIFS, COUNTIFS, dynamic arrays (LET, FILTER, UNIQUE, SORT), data validation, conditional formatting. MS Excel Advanced certification.</p>
+        <p><strong>Supply chain:</strong> Supply and demand planning, MRP, inventory and safety stock, scenario planning, S&amp;OP, advanced planning systems.</p>
+        <p><strong>Languages:</strong> Marathi (native), Hindi, French (working).</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap"><p>Charlotte, NC. <a href="mailto:aditya.amraotkar@gmail.com">aditya.amraotkar@gmail.com</a>. <a href="https://www.linkedin.com/in/adityaamraotkar" target="_blank" rel="noopener">LinkedIn</a></p></div>
+</footer>
+
+<script src="theme.js"></script>
+<script>
+/* MODEL-START */
+var MONTHS = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
+var SITES = { "Plant A": ["LN1", "LN2", "LN3", "LN4"], "Plant B": ["LN1", "LN2"], "Plant C": ["LN1"] };
+var SCENARIOS = {
+  "Base plan": "The plan as loaded, with no overrides.",
+  "Scenario 1": "A customer moves a large order into January.",
+  "Scenario 2": "An extra production run is added in December, and February is cut back."
+};
+
+function rng(seed) {
+  return function () {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function buildMaterials() {
+  var rand = rng(20261023);
+  var combos = [];
+  Object.keys(SITES).forEach(function (s) { SITES[s].forEach(function (l) { combos.push([s, l]); }); });
+  var mats = [];
+  for (var i = 0; i < 16; i++) {
+    var c = combos[i % combos.length];
+    var ss = Math.round((60 + rand() * 180) / 10) * 10;
+    var inv0 = ss * (0.85 + rand() * 0.5);
+    var demand = [], supply = [], prev = inv0;
+    for (var m = 0; m < 12; m++) {
+      var d = ss * (0.4 + rand() * 0.35);
+      var s = Math.max(0, d + (ss - prev) * 0.3 + (rand() - 0.5) * ss * 0.45);
+      demand.push(Math.round(d)); supply.push(Math.round(s));
+      prev = prev + s - d;
+    }
+    mats.push({
+      id: "BM-" + (101 + i), site: c[0], line: c[1],
+      proc: i % 4 === 3 ? "External" : "In-house",
+      ss: ss, inv0: Math.round(inv0), demand: demand, supply: supply
+    });
+  }
+  return mats;
+}
+
+function defaultOverrides(mats) {
+  var a1 = mats.filter(function (m) { return m.site === "Plant A" && m.line === "LN1"; })[0];
+  var a2 = mats.filter(function (m) { return m.site === "Plant A" && m.line === "LN2"; })[0];
+  return [
+    { scen: "Scenario 1", mat: a1.id, month: 2, measure: "Demand", qty: Math.round(a1.demand[2] * 2.5) },
+    { scen: "Scenario 2", mat: a2.id, month: 1, measure: "Supply", qty: Math.round(a2.supply[1] + a2.ss * 0.8) },
+    { scen: "Scenario 2", mat: a2.id, month: 3, measure: "Supply", qty: Math.round(a2.supply[3] * 0.3) }
+  ];
+}
+
+function computeBlock(mat, scen, overrides) {
+  var d = mat.demand.slice(), s = mat.supply.slice(), ovD = {}, ovS = {};
+  if (scen !== "Base plan") {
+    overrides.forEach(function (o) {
+      if (o.scen !== scen || o.mat !== mat.id || !isFinite(o.qty)) return;
+      if (o.measure === "Demand") { d[o.month] = o.qty; ovD[o.month] = true; }
+      else { s[o.month] = o.qty; ovS[o.month] = true; }
+    });
+  }
+  var inv = [], prev = mat.inv0;
+  for (var m = 0; m < 12; m++) { prev = prev + s[m] - d[m]; inv.push(prev); }
+  return {
+    demand: d, supply: s, inv: inv, ss: mat.ss, ovD: ovD, ovS: ovS,
+    deficit: inv.map(function (v) { return Math.max(0, mat.ss - v); }),
+    excess: inv.map(function (v) { return Math.max(0, v - mat.ss); })
+  };
+}
+
+function sumBlocks(blocks) {
+  var out = { demand: [], supply: [], inv: [], deficit: [], excess: [], ss: 0, ovD: {}, ovS: {} };
+  for (var m = 0; m < 12; m++) {
+    ["demand", "supply", "inv", "deficit", "excess"].forEach(function (k) {
+      out[k][m] = blocks.reduce(function (a, b) { return a + b[k][m]; }, 0);
+    });
+  }
+  out.ss = blocks.reduce(function (a, b) { return a + b.ss; }, 0);
+  blocks.forEach(function (b) {
+    Object.keys(b.ovD).forEach(function (k) { out.ovD[k] = true; });
+    Object.keys(b.ovS).forEach(function (k) { out.ovS[k] = true; });
+  });
+  return out;
+}
+
+function tier(balance, ss) {
+  if (balance < 0) return "short";
+  if (balance < 0.9 * ss) return "below";
+  if (balance <= 1.1 * ss) return "ok";
+  return "excess";
+}
+/* MODEL-END */
+
+(function () {
+  var mats = buildMaterials();
+  var byId = {}; mats.forEach(function (m) { byId[m.id] = m; });
+  var overrides = defaultOverrides(mats);
+  var state = { site: "Plant A", line: "LN1", proc: "All", mat: overrides[0].mat, scen: "Scenario 1" };
+  var TIER_LABEL = { short: "Shortfall", below: "Below target", ok: "Healthy", excess: "Excess" };
+  var $ = function (id) { return document.getElementById(id); };
+
+  function opts(sel, values, current, labels) {
+    sel.innerHTML = values.map(function (v, i) {
+      return "<option value='" + v + "'" + (v === current ? " selected" : "") + ">" + (labels ? labels[i] : v) + "</option>";
+    }).join("");
+  }
+
+  function filtered() {
+    return mats.filter(function (m) {
+      return (state.site === "All" || m.site === state.site) &&
+             (state.line === "All" || m.line === state.line) &&
+             (state.proc === "All" || m.proc === state.proc);
+    });
+  }
+
+  function syncSelectors() {
+    opts($("f-site"), ["All"].concat(Object.keys(SITES)), state.site, ["All sites"].concat(Object.keys(SITES)));
+    var lines = state.site === "All" ? [] : SITES[state.site];
+    if (state.line !== "All" && lines.indexOf(state.line) < 0) state.line = "All";
+    opts($("f-line"), ["All"].concat(lines), state.line, ["All lines"].concat(lines));
+    $("f-line").disabled = state.site === "All";
+    opts($("f-proc"), ["All", "In-house", "External"], state.proc, ["All types", "In-house", "External"]);
+    var list = filtered();
+    var ids = list.map(function (m) { return m.id; });
+    if (state.mat !== "TOTAL" && ids.indexOf(state.mat) < 0) state.mat = ids.length ? ids[0] : "TOTAL";
+    opts($("f-mat"), ["TOTAL"].concat(ids), state.mat, ["Total of " + list.length + " materials"].concat(ids));
+    opts($("f-scen"), Object.keys(SCENARIOS), state.scen);
+    $("scen-desc").textContent = SCENARIOS[state.scen];
+  }
+
+  function renderBlock() {
+    var list = filtered();
+    var b, title;
+    if (state.mat === "TOTAL") {
+      b = sumBlocks(list.map(function (m) { return computeBlock(m, state.scen, overrides); }));
+      title = "Planning block: total of " + list.length + " materials";
+    } else {
+      var m = byId[state.mat];
+      b = computeBlock(m, state.scen, overrides);
+      title = "Planning block: " + m.id + " (" + m.site + ", " + m.line + ", " + m.proc + ")";
+    }
+    $("block-title").textContent = title + ", " + state.scen;
+    var h = "<thead><tr><th class='rh' scope='col'>Measure</th>" + MONTHS.map(function (x) { return "<th scope='col'>" + x + "</th>"; }).join("") + "</tr></thead><tbody>";
+    function row(label, vals, cls, mark) {
+      var r = "<tr" + (cls ? " class='" + cls + "'" : "") + "><th class='rh' scope='row'>" + label + "</th>";
+      vals.forEach(function (v, i) {
+        var c = [];
+        if (cls === "inv") c.push("t-" + tier(v, b.ss));
+        if (mark && mark[i]) c.push("ov");
+        r += "<td" + (c.length ? " class='" + c.join(" ") + "'" : "") + ">" + Math.round(v) + "</td>";
+      });
+      return r + "</tr>";
+    }
+    h += row("Demand", b.demand, "", b.ovD);
+    h += row("Supply", b.supply, "", b.ovS);
+    h += row("Ending inventory", b.inv, "inv");
+    h += row("Safety stock", MONTHS.map(function () { return b.ss; }));
+    h += row("Deficit vs safety stock", b.deficit);
+    h += row("Excess vs safety stock", b.excess);
+    $("block").innerHTML = h + "</tbody>";
+  }
+
+  function renderGrid() {
+    var list = filtered();
+    $("map-title").textContent = "Heat map: " + list.length + " materials in this selection. Click a row to open its block.";
+    var h = "<thead><tr><th class='rh' scope='col'>Material (safety stock)</th>" + MONTHS.map(function (x) { return "<th scope='col' style='text-align:center'>" + x + "</th>"; }).join("") + "</tr></thead><tbody>";
+    list.forEach(function (m) {
+      var b = computeBlock(m, state.scen, overrides);
+      h += "<tr class='pick" + (m.id === state.mat ? " sel" : "") + "' data-id='" + m.id + "'><th class='rh' scope='row'>" + m.id + " (" + m.ss + ")</th>";
+      b.inv.forEach(function (v, i) {
+        var t = tier(v, m.ss);
+        var tip = m.id + ", " + MONTHS[i] + ": " + Math.round(v) + " against safety stock of " + m.ss + ". " + TIER_LABEL[t] + ".";
+        h += "<td class='t-" + t + "' title='" + tip + "' aria-label='" + tip + "'>" + Math.round(v) + "</td>";
+      });
+      h += "</tr>";
+    });
+    if (!list.length) h += "<tr><td colspan='13' style='color:var(--muted)'>No materials match this selection. Change a filter above.</td></tr>";
+    $("grid").innerHTML = h + "</tbody>";
+  }
+
+  function renderOverrides() {
+    var scenNames = Object.keys(SCENARIOS).filter(function (s) { return s !== "Base plan"; });
+    var h = "<thead><tr><th>Scenario</th><th>Site</th><th>Line</th><th>Material</th><th>Month</th><th>Measure</th><th>Override qty</th><th><span style='position:absolute;left:-9999px'>Remove</span></th></tr></thead><tbody>";
+    overrides.forEach(function (o, i) {
+      var m = byId[o.mat];
+      h += "<tr data-i='" + i + "'>" +
+        "<td><select data-k='scen' aria-label='Scenario'>" + scenNames.map(function (s) { return "<option" + (s === o.scen ? " selected" : "") + ">" + s + "</option>"; }).join("") + "</select></td>" +
+        "<td class='ro'>" + m.site + "</td><td class='ro'>" + m.line + "</td>" +
+        "<td><select data-k='mat' aria-label='Material'>" + mats.map(function (x) { return "<option" + (x.id === o.mat ? " selected" : "") + ">" + x.id + "</option>"; }).join("") + "</select></td>" +
+        "<td><select data-k='month' aria-label='Month'>" + MONTHS.map(function (x, j) { return "<option value='" + j + "'" + (j === o.month ? " selected" : "") + ">" + x + "</option>"; }).join("") + "</select></td>" +
+        "<td><select data-k='measure' aria-label='Measure'>" + ["Demand", "Supply"].map(function (x) { return "<option" + (x === o.measure ? " selected" : "") + ">" + x + "</option>"; }).join("") + "</select></td>" +
+        "<td><input type='number' min='0' step='1' data-k='qty' aria-label='Override quantity' value='" + o.qty + "'></td>" +
+        "<td><button type='button' class='rm' data-rm='" + i + "'>Remove</button></td></tr>";
+    });
+    if (!overrides.length) h += "<tr><td colspan='8' style='color:var(--muted)'>No overrides yet. Add one to build a scenario.</td></tr>";
+    $("ovr").innerHTML = h + "</tbody>";
+    var target = state.mat === "TOTAL" ? (filtered()[0] || mats[0]).id : state.mat;
+    $("add-hint").textContent = "Adds a row for " + target + " in " + (state.scen === "Base plan" ? "Scenario 1" : state.scen) + ".";
+  }
+
+  function renderAll() { syncSelectors(); renderBlock(); renderGrid(); renderOverrides(); }
+  function renderData() { renderBlock(); renderGrid(); }
+
+  ["site", "line", "proc", "mat", "scen"].forEach(function (k) {
+    $("f-" + k).addEventListener("change", function (e) { state[k] = e.target.value; renderAll(); });
+  });
+
+  $("grid").addEventListener("click", function (e) {
+    var tr = e.target.closest("tr.pick");
+    if (!tr) return;
+    state.mat = tr.getAttribute("data-id");
+    renderAll();
+    $("block-title").scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  });
+
+  $("ovr").addEventListener("input", function (e) {
+    var k = e.target.getAttribute("data-k");
+    if (k !== "qty") return;
+    var i = +e.target.closest("tr").getAttribute("data-i");
+    overrides[i].qty = Math.max(0, Math.round(parseFloat(e.target.value)));
+    renderData();
+  });
+  $("ovr").addEventListener("change", function (e) {
+    var k = e.target.getAttribute("data-k");
+    if (!k || k === "qty") return;
+    var i = +e.target.closest("tr").getAttribute("data-i");
+    overrides[i][k] = k === "month" ? +e.target.value : e.target.value;
+    renderAll();
+  });
+  $("ovr").addEventListener("click", function (e) {
+    var r = e.target.getAttribute("data-rm");
+    if (r === null) return;
+    overrides.splice(+r, 1);
+    renderAll();
+    $("add-ov").focus();
+  });
+  $("add-ov").addEventListener("click", function () {
+    var target = state.mat === "TOTAL" ? (filtered()[0] || mats[0]).id : state.mat;
+    if (state.scen === "Base plan") state.scen = "Scenario 1";
+    overrides.push({ scen: state.scen, mat: target, month: 0, measure: "Demand", qty: byId[target].demand[0] });
+    state.mat = target;
+    renderAll();
+    var inputs = $("ovr").querySelectorAll("input[data-k='qty']");
+    if (inputs.length) inputs[inputs.length - 1].focus();
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>
