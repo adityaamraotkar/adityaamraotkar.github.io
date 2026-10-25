@@ -7,6 +7,10 @@
 <meta name="description" content="Aditya Amraotkar, Operations and Supply Chain student at UNC Charlotte. Built a supply and demand balancing workbook at Honeywell. Seeking Summer 2027 internships.">
 <script>
   try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  if (window.IntersectionObserver && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.classList.add("reveal-on");
+    setTimeout(function () { if (!window.__reveal) document.documentElement.classList.remove("reveal-on"); }, 3000);
+  }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

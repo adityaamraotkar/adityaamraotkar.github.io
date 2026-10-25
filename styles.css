@@ -177,3 +177,7 @@ dialog.lb::backdrop { background: #000; }
 .lb .count { color: #9AA4AF; font-variant-numeric: tabular-nums; }
 .lb .cap { color: #ECEFF3; font-size: 0.95rem; text-align: center; flex: 1; }
 .lb :focus-visible { outline-color: #8DB8E0; }
+
+/* Load-in animation: elements fade up in sequence as they come into view */
+.reveal-on .rv { opacity: 0; transform: translateY(28px); }
+.reveal-on .rv.in { opacity: 1; transform: none; transition: opacity .7s cubic-bezier(.2,.7,.2,1) var(--d, 0ms), transform .9s cubic-bezier(.2,.7,.2,1) var(--d, 0ms); }
